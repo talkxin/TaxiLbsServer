@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="struts-base" extends="struts-default">
+		<interceptors>
+			<interceptor name="urlInterceptor" class="com.taxi.admin.authenticate.interceptor.URLInterceptor" />
+			<interceptor-stack name="urlStack">
+			
+			    <interceptor-ref name="exception"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="params">
+                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+			
+				<interceptor-ref name="urlInterceptor" />
+				
+				
+			</interceptor-stack>
+			<interceptor name="encodeInterceptor" class="com.taxi.admin.authenticate.interceptor.EncodeInterceptor"></interceptor>
+			</interceptors>
+			 <!-- 定义全局处理结果 -->
+        <global-results>
+	        <!-- 逻辑名为login的结果，映射到/login.jsp页面 -->
+	        <result name="login">WEB-INF/authenticate/login.jsp</result>
+        </global-results>
+	</package>
+</struts>

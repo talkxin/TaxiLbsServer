@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="mainFrame" extends="struts-default">
+		<action name="login" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="login">
+			<result name="success">/WEB-INF/authenticate/login.jsp</result>
+		</action>
+		<action name="check" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="check">
+			<result name="success" type="redirect">main.do</result>
+			<result name="error">WEB-INF/authenticate/login.jsp</result>
+		</action>
+		<action name="sendVerifycode" class="com.taxi.admin.authenticate.action.AuthenticateAction"
+            method="sendVerifycode">
+            <result>WEB-INF/authenticate/ajaxSave.jsp</result>
+        </action>
+	</package>
+	<package name="main" extends="struts-base">
+	<default-interceptor-ref name="urlStack" />
+		<action name="main" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="main">
+			<result name="success">/WEB-INF/authenticate/main.jsp</result>
+		</action>
+		<action name="menu" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="menu">
+			<result name="success">/WEB-INF/authenticate/menu.jsp</result>
+		</action>
+		<action name="welcome" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="welcome">
+			<result name="success">/WEB-INF/authenticate/welcome.jsp</result>
+		</action>
+		<action name="logout" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="logout">
+			<result name="success"  type="redirect">login.do</result>
+		</action>
+		<action name="modifyPassword" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="modifyPassword">
+			<result name="success">/WEB-INF/authenticate/passwordModify.jsp</result>
+		</action>
+		<action name="updatePassword" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="updatePassword">
+			<result name="success" >modifyPassword.do</result>
+			<result name="error" >modifyPassword.do</result>
+		</action>
+
+		<action name="mainEditMenu" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="mainEditMenu">
+			<result name="success">/WEB-INF/authenticate/editMenuMain.jsp</result>
+		</action>
+		<action name="listEditMenu" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="listEditMenu">
+			<result name="success">/WEB-INF/authenticate/editMenuList.jsp</result>
+		</action>
+		<action name="addEditMenu" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="addEditMenu">
+			<result name="success">/WEB-INF/authenticate/editMenuAdd.jsp</result>
+		</action>
+		<action name="insertEditMenu" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="insertEditMenu">
+			<result name="success">mainEditMenu.do</result>
+		</action>
+		<action name="modifyEditMenu" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="modifyEditMenu">
+			<result name="success">/WEB-INF/authenticate/editMenuModify.jsp</result>
+		</action>
+		<action name="updateEditMenu" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="updateEditMenu">
+			<result name="success">mainEditMenu.do</result>
+			<result name="error">modifyEditMenu.do</result>
+		</action>
+		<action name="deleteEditMenu" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="deleteEditMenu">
+			<result name="success">mainEditMenu.do</result>
+		</action>
+		<action name="listRole" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="listRole">
+			<result name="success">/WEB-INF/authenticate/roleList.jsp</result>
+		</action>
+		<action name="addRole" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="addRole">
+			<result name="success">/WEB-INF/authenticate/roleAdd.jsp</result>
+		</action>
+		<action name="insertRole" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="insertRole">
+			<result name="success">listRole.do</result>
+			<result name="error">addRole.do</result>
+		</action>
+		<action name="modifyRole" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="modifyRole">
+			<result name="success">/WEB-INF/authenticate/roleModify.jsp</result>
+		</action>
+		<action name="updateRole" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="updateRole">
+			<result name="success">listRole.do</result>
+			<result name="error">modifyRole.do</result>
+		</action>
+		<action name="deleteRole" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="deleteRole">
+			<result name="success">listRole.do</result>
+		</action>
+		<action name="listUser" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="listUser">
+			<result name="success">/WEB-INF/authenticate/userList.jsp</result>
+		</action>
+		<action name="addUser" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="addUser">
+			<result name="success">/WEB-INF/authenticate/userAdd.jsp</result>
+		</action>
+		<action name="checkLoginName" class="com.taxi.admin.authenticate.action.AuthenticateAction" 
+	        method="checkLoginName" >
+	        <result name="success">WEB-INF/authenticate/usersAjax.jsp</result>
+	    </action>
+		<action name="insertUser" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="insertUser">
+			<result name="success">listUser.do</result>
+		</action>
+		<action name="modifyUser" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="modifyUser">
+			<result name="success">/WEB-INF/authenticate/userModify.jsp</result>
+		</action>
+		<action name="updateUser" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="updateUser">
+			<result name="success">listUser.do</result>
+		</action>
+		<action name="deleteUser" 
+				class="com.taxi.admin.authenticate.action.AuthenticateAction"
+				method="deleteUser">
+			<result name="success">listUser.do</result>
+		</action>
+	</package>
+
+</struts>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- ajax -->
+
+	<package name="taxiAjax" extends="json-default">
+		<!-- 验证用户唯一性 -->
+		<action name="isNewUser" method="isNewUser"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="json">
+				<param name="root">newUser</param>
+			</result>
+		</action>
+		<!-- 获取城市 -->
+		<action name="getSysCityList" method="getSysCityList"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="json">
+				<param name="root">sysCity</param>
+			</result>
+		</action>
+		<!-- 获取区县 -->
+		<action name="getSysDistrictList" method="getSysDistrictList"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="json">
+				<param name="root">sysDistrict</param>
+			</result>
+		</action>
+		<!-- 验证城市唯一性 -->
+		<action name="isNewCity" method="isNewCity"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="json">
+				<param name="root">newCity</param>
+			</result>
+		</action>
+		<!-- 获取验证对象 -->
+		<action name="getCityApplyObj" method="getCityApplyObj"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="json">
+				<param name="root">cityApply</param>
+			</result>
+		</action>
+		<!-- 保存城市 -->
+		<action name="applyToCityAdd" method="saveAddCity"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="json">
+			</result>
+		</action>
+		<!-- 修改城市 -->
+		<action name="applyToCityUpdate" method="saveUpdateCity2"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="json">
+			</result>
+		</action>
+		<!-- 修改审核状态 -->
+		<action name="updateCityApply" method="updateCityApply"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="json">
+			</result>
+		</action>
+		<!-- 返回验证数据 -->
+		<action name="getApplyDriverObj" method="getApplyDriverObj"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="json">
+				<param name="root">driverApply</param>
+			</result>
+		</action>
+		<!-- 修改认证状态 -->
+		<action name="newDriverTo" method="newDriverTo"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="json">
+			</result>
+		</action>
+	</package>
+	<package name="taxiService" extends="struts-base">
+		<default-interceptor-ref name="urlStack" />
+		<!-- 支付流水 -->
+		<action name="inPayinfo" method="inPayinfo"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/PayInfoList.jsp</result>
+		</action>
+		<!-- 业务流水 -->
+		<action name="inServiceInfo" method="inServiceInfo"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/ServiceInfoList.jsp</result>
+		</action>
+		<!-- 户管理列表 -->
+		<action name="inUserInfo" method="inUserInfo"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/user/userList.jsp</result>
+		</action>
+		<!-- 添加用户 -->
+		<action name="addUserInfo" method="addUserInfo"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/user/userAdd.jsp</result>
+		</action>
+		<!-- 批量添加用户 -->
+		<action name="addsUserInfo" method="addsUserInfo"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/user/userAdds.jsp</result>
+		</action>
+		<!-- 修改用户 -->
+		<action name="updateUserInfo" method="updateUserInfo"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/user/userUpdate.jsp</result>
+		</action>
+		<!-- 保存添加用户 -->
+		<action name="saveAddUser" method="saveAddUser"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="redirect">inUserInfo.do?menuId=${menuId}</result>
+		</action>
+		<!-- 批量添加用户 -->
+		<action name="saveAddsUser" method="saveAddsUser"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result name="bading">WEB-INF/service/user/userAdds.jsp</result>
+		</action>
+		<!-- 保存修改用户 -->
+		<action name="saveUpdateUser" method="saveUpdateUser"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="redirect">inUserInfo.do?menuId=${menuId}&amp;pageNo=${pageNo}&amp;seach[0]=${seach[0]}&amp;seach[1]=${seach[1]}
+			</result>
+		</action>
+		<!-- 禁止该用户登录 -->
+		<action name="delUser" method="delUser"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="redirect">inUserInfo.do?menuId=${menuId}&amp;pageNo=${pageNo}&amp;seach[0]=${seach[0]}&amp;seach[1]=${seach[1]}
+			</result>
+		</action>
+		<!-- 进入城市价格管理 -->
+		<action name="inCityTaxi" method="inCityTaxi"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/city/cityList.jsp</result>
+		</action>
+		<!-- 添加城市 -->
+		<action name="addCity" method="addCity"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/city/cityAdd.jsp</result>
+		</action>
+		<!-- 批量添加城市 -->
+		<action name="addsCity" method="addsCity"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/city/cityAdds.jsp</result>
+		</action>
+		<!-- 修改城市 -->
+		<action name="updateCity" method="updateCity"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/city/cityUpdate.jsp</result>
+		</action>
+		<!-- 保存添加城市 -->
+		<action name="saveAddCity" method="saveAddCity"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>inCityTaxi.do?menuId=${menuId}</result>
+		</action>
+		<!-- 保存批量添加城市 -->
+		<action name="saveAddsCity" method="saveAddsCity"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result name="bading">WEB-INF/service/city/cityAdds.jsp</result>
+		</action>
+		<!-- 保存修改城市 -->
+		<action name="saveUpdateCity" method="saveUpdateCity"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="redirect">inCityTaxi.do?menuId=${menuId}&amp;pageNo=${pageNo}&amp;seach[0]=${seach[0]}&amp;seach[1]=${seach[1]}
+			</result>
+		</action>
+		<!-- 启用城市 -->
+		<action name="statusCity" method="statusCity"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="redirect">inCityTaxi.do?menuId=${menuId}&amp;pageNo=${pageNo}&amp;seach[0]=${seach[0]}&amp;seach[1]=${seach[1]}
+			</result>
+		</action>
+		<!-- 删除城市 -->
+		<action name="delCity" method="delCity"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result type="redirect">inCityTaxi.do?menuId=${menuId}&amp;pageNo=${pageNo}&amp;seach[0]=${seach[0]}&amp;seach[1]=${seach[1]}
+			</result>
+		</action>
+		<!-- 司机管理 -->
+		<action name="inDriver" method="inDriver"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/TaxiDriver/driverList.jsp</result>
+		</action>
+		<!-- 添加司机 -->
+		<action name="addDriver" method="addDriver"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/TaxiDriver/driverAdd.jsp</result>
+		</action>
+		<!-- 批量添加司机 -->
+		<action name="addsDriver" method="addsDriver"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/TaxiDriver/driverAdds.jsp</result>
+		</action>
+		<!-- 修改司机 -->
+		<action name="updateDriver" method="updateDriver"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/TaxiDriver/driverUpdate.jsp</result>
+		</action>
+		<!-- 保存添加司机 -->
+		<action name="saveAddDriver" method="saveAddDriver"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>inDriver.do?menuId=${menuId}&amp;pageNo=${pageNo}&amp;seach[0]=${seach[0]}&amp;seach[1]=${seach[1]}&amp;seach[2]=${seach[2]}
+			</result>
+		</action>
+		<!-- 保存批量添加司机 -->
+		<action name="saveAddsDriver" method="saveAddsDriver"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/TaxiDriver/driverAdds.jsp</result>
+		</action>
+		<!-- 保存修改司机 -->
+		<action name="saveUpdateDriver" method="saveUpdateDriver"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>inDriver.do?menuId=${menuId}&amp;pageNo=${pageNo}&amp;seach[0]=${seach[0]}&amp;seach[1]=${seach[1]}&amp;seach[2]=${seach[2]}
+			</result>
+		</action>
+		<!-- 删除司机 -->
+		<action name="delDriver" method="delDriver"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>inDriver.do?menuId=${menuId}&amp;pageNo=${pageNo}&amp;seach[0]=${seach[0]}&amp;seach[1]=${seach[1]}&amp;seach[2]=${seach[2]}
+			</result>
+		</action>
+		<!-- 身份验证申请 -->
+		<action name="inDriverApply" method="inDriverApply"
+			class="com.taxi.admin.service.action.ServiceAction">
+			<result>WEB-INF/service/TaxiDriver/applyDriverList.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+ "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="authenticateDao" class="com.taxi.admin.authenticate.dao.impl.AuthMenuDAOImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+	<bean id="authRoleDao" class="com.taxi.admin.authenticate.dao.impl.AuthRoleDAOImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+	<bean id="authRoleVsMenuDao"
+		class="com.taxi.admin.authenticate.dao.impl.AuthRoleVsMenuDAOImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+	<bean id="userDao" class="com.taxi.admin.authenticate.dao.impl.AuthUserDAOImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+	<bean id="authenticateBo" class="com.taxi.admin.authenticate.bo.impl.AuthenticateBOImpl">
+		<property name="authenticateDao" ref="authenticateDao"></property>
+		<property name="authRoleDao" ref="authRoleDao"></property>
+		<property name="authRoleVsMenuDao" ref="authRoleVsMenuDao"></property>
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+
+	<!-- 主要功能bo -->
+	<bean id="taxiCityInfoDao" class="com.taxi.admin.service.dao.impl.TaxiCityInfoDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="taxiDriverInfoDao" class="com.taxi.admin.service.dao.impl.TaxiDriverInfoDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="taxiPayInfoDao" class="com.taxi.admin.service.dao.impl.TaxiPayInfoDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="taxiServiceDao" class="com.taxi.admin.service.dao.impl.TaxiServiceDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="taxiUserDao" class="com.taxi.admin.service.dao.impl.TaxiUserDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+	<bean id="taxiServiceBo" class="com.taxi.admin.service.bo.impl.TaxiServiceBoImpl">
+		<property name="taxiCityInfoDao" ref="taxiCityInfoDao" />
+		<property name="taxiDriverInfoDao" ref="taxiDriverInfoDao" />
+		<property name="taxiPayInfoDao" ref="taxiPayInfoDao" />
+		<property name="taxiServiceDao" ref="taxiServiceDao" />
+		<property name="taxiUserDao" ref="taxiUserDao"></property>
+	</bean>
+	<!-- 客户端查询 -->
+	<bean id="clientServiceDao" class="com.taxi.admin.client.dao.impl.ClientServiceDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="clientUserDao" class="com.taxi.admin.client.dao.impl.ClientUserDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+	<bean id="clientUserBo" class="com.taxi.admin.client.bo.impl.ClientUserBoimpl">
+		<property name="clientUserDao" ref="clientUserDao"></property>
+	</bean>
+	<bean id="clientServiceBo" class="com.taxi.admin.client.bo.impl.ClientServiceBoImpl">
+		<property name="clientServiceDao" ref="clientServiceDao"></property>
+	</bean>
+</beans>

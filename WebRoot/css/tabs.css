@@ -1,0 +1,69 @@
+#tabs1 {
+	float:left;
+	width:100%;
+	background:#F4F7FB;
+	font-size:93%;
+	line-height:normal;
+	border-bottom:1px solid #BCD2E6;
+}
+#tabs1 ul {
+	margin:0;
+	padding:10px 10px 0 21px;
+	list-style:none;
+}
+#tabs1 li {
+	display:inline;
+	margin:0;
+	padding:0;
+}
+#tabs1 a {
+	float:left;
+	background:url("../images/tableft1.gif") no-repeat left top;
+	margin:0;
+	padding:0 0 0 4px;
+	text-decoration:none;
+}
+#tabs1 a span {
+	float:left;
+	display:block;
+	font-size:12px;
+	background:url("../images/tabright1.gif") no-repeat right top;
+	padding:5px 15px 4px 6px;
+	color:#627EB7;
+}
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#tabs1 a span {
+	float:none;
+}
+/* End IE5-Mac hack */
+#tabs a:hover span {
+	color:#627EB7;
+}
+#tabs1 a:hover {
+	background-position:0% -42px;
+}
+#tabs1 a:hover span {
+	background-position:100% -42px;
+}
+
+#tabs1 #current a {
+	background-position:0% -42px;
+}
+#tabs1 #current a span {
+	background-position:100% -42px;
+	font-weight: bold;
+}
+      
+.clearfix {
+	 zoom:1;
+	 width: 0px;
+	 margin: 0px;
+}
+.clearfix:after {
+	 visibility:hidden;
+	 display:block;
+	 font-size:0;
+	 content:" ";
+	 clear:both;
+	 height:0;
+}

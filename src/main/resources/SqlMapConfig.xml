@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<sqlMap resource="/com/taxi/admin/authenticate/dao/impl/AuthMenuDaoSql.xml" />
+	<sqlMap resource="/com/taxi/admin/authenticate/dao/impl/AuthRoleDAOSql.xml" />
+	<sqlMap
+		resource="/com/taxi/admin/authenticate/dao/impl/AuthRoleVsMenuDAOSql.xml" />
+	<sqlMap resource="/com/taxi/admin/authenticate/dao/impl/AuthUserDAOSql.xml" />
+
+	<!-- 出租车业务 -->
+	<sqlMap resource="/com/taxi/admin/service/dao/impl/TaxiCityInfoDaoSql.xml" />
+	<sqlMap resource="/com/taxi/admin/service/dao/impl/TaxiDriverInfoDaoSql.xml" />
+	<sqlMap resource="/com/taxi/admin/service/dao/impl/TaxiPayInfoDaoSql.xml" />
+	<sqlMap resource="/com/taxi/admin/service/dao/impl/TaxiServiceDaoSql.xml" />
+	<sqlMap resource="/com/taxi/admin/service/dao/impl/TaxiUserDaoSql.xml" />
+
+	<!-- 客户端查询 -->
+	<sqlMap resource="/com/taxi/admin/client/module/taxiService.xml" />
+	<sqlMap resource="/com/taxi/admin/client/module/taxiUser.xml" />
+</sqlMapConfig>

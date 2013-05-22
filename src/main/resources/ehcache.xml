@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false"
+	monitoring="autodetect" dynamicConfig="true">
+
+
+	<diskStore path="java.io.tmpdir" />
+
+	<defaultCache maxElementsInMemory="1000" eternal="false"
+		timeToIdleSeconds="3600" timeToLiveSeconds="7200" diskPersistent="false"
+		statistics="true" memoryStoreEvictionPolicy="LFU">
+	</defaultCache>
+	<!--登录后角色权限缓存 -->
+	<cache name="roleVsMenuCache" maxElementsInMemory="10000"
+		eternal="false" timeToIdleSeconds="604800" timeToLiveSeconds="604800"
+		overflowToDisk="true" />
+	<!-- 随机打车缓存，只存储当天的，每天录入一次 -->
+	<cache name="randomService" maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="0" timeToLiveSeconds="0" overflowToDisk="true" />
+	<!-- 预约打车缓存，只存储当天的，其他入库 -->
+	<cache name="appointmentService" maxElementsInMemory="10000"
+		eternal="true" timeToIdleSeconds="0" timeToLiveSeconds="0"
+		overflowToDisk="true" />
+</ehcache>
+

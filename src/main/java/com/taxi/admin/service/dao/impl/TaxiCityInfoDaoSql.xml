@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+	<typeAlias alias="cityTaxi"
+		type="com.taxi.admin.service.module.TTaxiserverCitytaxi" />
+	<typeAlias alias="province" type="com.taxi.admin.service.module.TSysProvince" />
+	<typeAlias alias="city" type="com.taxi.admin.service.module.TSysCity" />
+	<typeAlias alias="district" type="com.taxi.admin.service.module.TSysDistrict" />
+	<typeAlias alias="integer" type="java.lang.Integer" />
+	<typeAlias alias="cityApply"
+		type="com.taxi.admin.service.module.TTaxiclientCitytaxiapply" />
+	<select id="getCityApplyList" resultClass="cityApply"
+		parameterClass="cityApply">
+		select t.*,s.loginName from t_taxiClient_citytaxiApply t left join
+		t_taxiserver_taxiuser s on t.uid=s.uid where 1=1
+		<isNotNull property="cityName"> and
+			t.cityName like
+			'%$cityName$%'
+		</isNotNull>
+		<isNotNull property="companyName">and t.companyName like
+			'%$companyName$%'
+		</isNotNull>
+		<isNotNull property="struts">and t.struts=#struts#
+		</isNotNull>
+	</select>
+	<select id="CountCityApplyList" resultClass="long"
+		parameterClass="cityApply">
+		select count(*) from t_taxiClient_citytaxiApply t left join
+		t_taxiserver_taxiuser s on t.uid=s.uid where 1=1
+		<isNotNull property="cityName"> and
+			t.cityName like
+			'%$cityName$%'
+		</isNotNull>
+		<isNotNull property="companyName">and t.companyName like
+			'%$companyName$%'
+		</isNotNull>
+		<isNotNull property="struts">and t.struts=#struts#
+		</isNotNull>
+	</select>
+	<select id="getCityApplyObj" resultClass="cityApply"
+		parameterClass="long">
+		select t.*,s.loginName from t_taxiClient_citytaxiApply
+		t left join
+		t_taxiserver_taxiuser s on t.uid=s.uid where
+		t.applyId=#applyId#
+	</select>
+	<update id="updateCityApply" parameterClass="cityApply">
+		update
+		t_taxiClient_citytaxiApply set struts=#struts# where
+		applyId=#applyId#
+	</update>
+	<select id="getTaxiCityList" resultClass="cityTaxi"
+		parameterClass="cityTaxi">
+		select * from t_taxiserver_cityTaxi where 1=1
+		<isNotNull prepend="and" property="cityName">
+			cityName like
+			'%$cityName$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="struts">
+			struts =#struts#
+		</isNotNull>
+		<isNotNull prepend="and" property="companyName">
+			companyName like
+			'%$companyName$%'
+		</isNotNull>
+	</select>
+	<select id="CountTaxiCityList" resultClass="long"
+		parameterClass="cityTaxi">
+		select count(*) from t_taxiserver_cityTaxi where 1=1
+		<isNotNull prepend="and" property="cityName">
+			cityName like
+			'%$cityName$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="struts">
+			struts =#struts#
+		</isNotNull>
+		<isNotNull prepend="and" property="companyName">
+			companyName like
+			'%$companyName$%'
+		</isNotNull>
+	</select>
+	<select id="getTaxiCityInfoObject" parameterClass="long"
+		resultClass="cityTaxi">
+		select * from t_taxiserver_cityTaxi where cid=#cid#
+	</select>
+
+	<insert id="addTaxiCityInfo" parameterClass="cityTaxi">
+		insert into
+		t_taxiserver_cityTaxi(cityName,companyName,goNumber,extraNumber,gokmNumber,kmNumber,struts)
+		values(#cityName#,#companyName#,#goNumber#,#extraNumber#,#gokmNumber#,#kmNumber#,#struts#)
+	</insert>
+
+	<update id="updateTaxiCityInfo" parameterClass="cityTaxi">
+		update
+		t_taxiserver_cityTaxi set
+		cityName=#cityName#,companyName=#companyName#,goNumber=#goNumber#,extraNumber=#extraNumber#,gokmNumber=#gokmNumber#,kmNumber=#kmNumber#,struts=#struts#
+		where cid=#cid#
+	</update>
+
+	<delete id="deleteTaxiCityInfo" parameterClass="long">
+		delete from
+		t_taxiserver_cityTaxi where cid=#cid#
+	</delete>
+	<!-- 获取省 -->
+	<select id="getProvinceList" resultClass="province">
+		select * from
+		t_sys_province order by prosort
+	</select>
+	<!-- 获取市 -->
+	<select id="getCity" parameterClass="integer" resultClass="city">
+		select * from t_sys_city where proid=#proid# order by citysort
+	</select>
+	<!-- 获取县 -->
+	<select id="getDistrict" parameterClass="integer" resultClass="district">
+		select * from t_sys_district where cityid=#cityid#
+	</select>
+	<!-- 验证城市唯一性 -->
+	<select id="isNewTaxiCity" parameterClass="cityTaxi"
+		resultClass="cityTaxi">
+		select * from t_taxiserver_citytaxi where cityName=#cityName#
+		<isNotNull prepend="and" property="companyName">
+			companyName=#companyName#
+		</isNotNull>
+	</select>
+</sqlMap>

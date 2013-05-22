@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+	<typeAlias alias="taxiService"
+		type="com.taxi.admin.service.module.TTaxiserverTaxiservice" />
+
+	<select id="getTaxiServiceList" parameterClass="taxiService"
+		resultClass="taxiService">
+		select
+		t_taxiserver_taxiservice.*,t_taxiserver_driverinfo.phoneNumber
+		as
+		phoneNumber,t_taxiserver_driverinfo.plateNumber as
+		plateNumber,t_taxiserver_driverinfo.driverCompany as driverCompany
+		from t_taxiserver_taxiservice left join t_taxiserver_driverinfo on
+		t_taxiserver_taxiservice.did=t_taxiserver_driverinfo.id
+		<isNotNull prepend="and" property="serviceType">
+			serviceType=#serviceType#
+		</isNotNull>
+		<isNotNull prepend="and" property="plateNumber">
+			plateNumber=#plateNumber#
+		</isNotNull>
+		<isNotNull prepend="and" property="phoneNumber">
+			phoneNumber=#phoneNumber#
+		</isNotNull>
+		<isNotNull prepend="and" property="driverCompany">
+			driverCompany like
+			'%'||#driverCompany#||'%'
+		</isNotNull>
+	</select>
+	<select id="CountTaxiServiceList" parameterClass="taxiService"
+		resultClass="long">
+		select
+		count(*)
+		from t_taxiserver_taxiservice left join t_taxiserver_driverinfo on
+		t_taxiserver_taxiservice.did=t_taxiserver_driverinfo.id
+		<isNotNull prepend="and" property="serviceType">
+			serviceType=#serviceType#
+		</isNotNull>
+		<isNotNull prepend="and" property="plateNumber">
+			plateNumber=#plateNumber#
+		</isNotNull>
+		<isNotNull prepend="and" property="phoneNumber">
+			phoneNumber=#phoneNumber#
+		</isNotNull>
+		<isNotNull prepend="and" property="driverCompany">
+			driverCompany like
+			'%'||#driverCompany#||'%'
+		</isNotNull>
+	</select>
+</sqlMap>

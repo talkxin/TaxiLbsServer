@@ -1,0 +1,13 @@
+/DBConnection.properties
+/SqlMapConfig.xml
+/applicationContext-beans.xml
+/applicationContext-db.xml
+/com
+/config_data.xml
+/ehcache.xml
+/log4j.xml
+/struts-authenticate.xml
+/struts-base.xml
+/struts-client.xml
+/struts-service.xml
+/struts.xml

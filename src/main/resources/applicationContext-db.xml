@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+ "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:DBConnection.properties</value>
+				<value>classpath:Email.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="myDataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="driver" value="${taxi.bj1.jdbc.driverClassName}"></property>
+		<property name="driverUrl" value="${taxi.bj1.jdbc.url}"></property>
+		<property name="user" value="${taxi.bj1.jdbc.username}"></property>
+		<property name="password" value="${taxi.bj1.jdbc.password}"></property>
+		<property name="alias" value="${taxi.bj1.jdbs.alias}"></property>
+
+
+		<property name="maximumActiveTime" value="300000" />
+		<property name="prototypeCount" value="4" />
+		<property name="maximumConnectionCount" value="50" />
+		<property name="minimumConnectionCount" value="2" />
+		<property name="simultaneousBuildThrottle" value="30" />
+		<property name="trace" value="true" />
+	</bean>
+
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:SqlMapConfig.xml" />
+		<property name="dataSource" ref="myDataSource" />
+	</bean>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${email.host}"></property>  
+        <property name="port" value="${email.port}"></property>  
+        <property name="username" value="${email.username}"></property>  
+        <property name="password" value="${email.password}"></property>  
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.timeout">25000</prop>
+			</props>
+		</property>
+	</bean>
+
+
+
+	<bean id="sendEmail" class="com.taxi.admin.email.SendEmailBOImpl">
+		<property name="javaMail" ref="mailSender" />
+	</bean>
+	<!-- <bean id="emailJobSetBO" class="com.cplatform.bj.mobileserf.emailset.bo.EmailJobSetBOImpl"> 
+		<property name="sendEmail" ref="sendEmail"/> <property name="emailSetBO" 
+		ref="emailSetBO"/> <property name="excelReportBO" ref="excelReportBO"/> </bean> -->
+</beans>

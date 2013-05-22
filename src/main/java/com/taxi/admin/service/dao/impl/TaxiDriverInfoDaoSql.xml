@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+	<typeAlias alias="driverInfo"
+		type="com.taxi.admin.service.module.TTaxiserverDriverinfo" />
+	<typeAlias alias="diverApply"
+		type="com.taxi.admin.service.module.TTaxiclientDriverinfoapply" />
+
+	<select id="getDriverList" parameterClass="driverInfo"
+		resultClass="driverInfo">
+		select t.*,s.phoneNumber,s.loginName from t_taxiclient_driverinfoapply
+		t
+		left join
+		t_taxiserver_taxiuser s on t.uid=s.uid where isTrue!=0 and
+		isTrue!=1
+		<isNotNull prepend="and" property="driverName">
+			t.driverName like
+			'%$driverName$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="driverCompany">
+			t.driverCompany like
+			'%$driverCompany$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="plateNumber">
+			t.plateNumber like
+			'%$plateNumber$%'
+		</isNotNull>
+	</select>
+	<select id="CountDriverList" parameterClass="driverInfo"
+		resultClass="long">
+		select count(*) from t_taxiclient_driverinfoapply
+		t
+		left join
+		t_taxiserver_taxiuser s on t.uid=s.uid where isTrue!=0 and
+		isTrue!=1
+		<isNotNull prepend="and" property="driverName">
+			t.driverName like
+			'%$driverName$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="driverCompany">
+			t.driverCompany like
+			'%$driverCompany$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="plateNumber">
+			t.plateNumber like
+			'%$plateNumber$%'
+		</isNotNull>
+	</select>
+
+	<select id="getApplyDriverList" parameterClass="diverApply"
+		resultClass="diverApply">
+		select t.*,s.loginName from t_taxiclient_driverinfoapply t left join
+		t_taxiserver_taxiuser s on t.uid=s.uid where isTrue=0
+		<isNotNull prepend="and" property="driverName">
+			t.driverName like
+			'%$driverName$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="driverCompany">
+			t.driverCompany like
+			'%$driverCompany$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="plateNumber">
+			t.plateNumber like
+			'%$plateNumber$%'
+		</isNotNull>
+	</select>
+	<select id="CountApplyDriverList" parameterClass="diverApply"
+		resultClass="long">
+		select count(*) from t_taxiclient_driverinfoapply t left join
+		t_taxiserver_taxiuser s on t.uid=s.uid where isTrue=0
+		<isNotNull prepend="and" property="driverName">
+			t.driverName like
+			'%$driverName$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="driverCompany">
+			t.driverCompany like
+			'%$driverCompany$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="plateNumber">
+			t.plateNumber like
+			'%$plateNumber$%'
+		</isNotNull>
+	</select>
+	<select id="getApplyDriverObj" parameterClass="long"
+		resultClass="diverApply">
+		select t.*,s.loginName from t_taxiclient_driverinfoapply t
+		left join
+		t_taxiserver_taxiuser s on t.uid=s.uid where t.id=#id#
+	</select>
+	<update id="updateApplyDriver" parameterClass="diverApply">
+		update
+		t_taxiclient_driverinfoapply set isTrue=#isTrue# where id=#id#
+	</update>
+
+	<select id="getDriverInfoObject" parameterClass="long"
+		resultClass="driverInfo">
+		select * from t_taxi_serverDriverinfo where id=#id#
+	</select>
+
+	<select id="getDriverInfoObjectForUid" parameterClass="long"
+		resultClass="driverInfo">
+		select * from t_taxiserver_driverinfo where uid=#uid#
+	</select>
+
+	<insert id="isAddDriver" parameterClass="driverInfo">
+		insert into
+		t_taxiserver_driverinfo(uid,driverCompany,driverName,driverCity,plateNumber,companyNo,taobaoLoginName,isTrue)
+		values(#uid#,#driverName#,#driverCompany#,#driverCity#,#plateNumber#,#companyNo#,#taobaoLoginName#,#isTrue#)
+	</insert>
+
+	<update id="isUpdateDriver" parameterClass="driverInfo">
+		update
+		t_taxiserver_driverinfo set
+		uid=#uid#,driverCompany=#driverCompany#,driverName=#driverName#,driverCity=#driverCity#,plateNumber=#plateNumber#,companyNo=#companyNo#,taobaoLoginName=#taobaoLoginName#,isTrue=#isTrue#
+		where id=#id#
+	</update>
+
+	<delete id="isDeleteDriver" parameterClass="long">
+		delete from
+		t_taxiclient_driverinfoapply where id=#id#
+	</delete>
+</sqlMap>

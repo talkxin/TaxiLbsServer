@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+	<typeAlias alias="taxiUser"
+		type="com.taxi.admin.service.module.TTaxiserverTaxiuser" />
+	<typeAlias alias="driverInfo"
+		type="com.taxi.admin.service.module.TTaxiserverDriverinfo" />
+	<!-- 注册时验证唯一性 -->
+	<select id="regForTrue" parameterClass="taxiUser" resultClass="long">
+		select count(*) from t_taxiserver_taxiuser where loginName=#loginName#
+	</select>
+	<!-- 进行登录 select * from t_taxiserver_taxiuser where (loginName=#loginName# 
+		or phoneNumber=#phoneNumber#) and password=#password# -->
+	<select id="loginInClient" parameterClass="taxiUser"
+		resultClass="taxiUser">
+		select * from t_taxiserver_taxiuser where
+		loginName=#loginName# and
+		password=#password#
+	</select>
+	<!-- 通过用户修改司机 -->
+	<update id="updateDriverInfoForClient" parameterClass="driverInfo">
+		update
+		t_taxi_serverdriverinfo set
+		driverCompany=#driverCompany#,driverName=#driverName#,driverCompany=#driverCompany#,driverCity=#driverCity#,plateNumber=#plateNumber#,companyNo=#companyNo#,taobaoLoginName=#taobaoLoginName#,isTrue=#isTrue#
+		where uid=#uid#
+	</update>
+	<!-- 更新司机坐标 -->
+	<update id="updateDriverCoordinate" parameterClass="driverInfo">
+		update
+		t_taxiserver_driverinfo set
+		lon=#lon#,lat=#lat#,updateTime=#updateTime# where id=#id#
+	</update>
+</sqlMap>

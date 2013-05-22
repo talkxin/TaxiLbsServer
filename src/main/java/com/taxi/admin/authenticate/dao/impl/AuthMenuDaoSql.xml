@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="menu"
+		type="com.taxi.admin.authenticate.model.MenuModel" />
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+
+
+	<select id="listMainMenu" resultClass="long" parameterClass="long">
+		select r.menuId from t_auth_menu m,t_auth_role_vs_menu r where
+		r.roleid=#id# and m.menuid=r.menuid and m.menuParentId=0 order by
+		r.menuid
+	</select>
+
+	<select id="listMainChildMenu" resultClass="long"
+		parameterClass="hsahmap">
+		select r.menuId from t_auth_menu m,t_auth_role_vs_menu
+		r where
+		r.roleid=#roleid# and m.menuid=r.menuid and
+		m.menuParentId=#menuParentId# order by r.menuid
+	</select>
+
+	<select id="listMenu" resultClass="menu">
+		select * from t_auth_menu
+		where menuParentId=0 order by menuId
+	</select>
+
+	<select id="getMenuByParentID" resultClass="menu"
+		parameterClass="long">
+		select * from t_auth_menu where
+		menuParentId=#menuParentId# order by menuId
+	</select>
+
+	<select id="isTitleIn" resultClass="menu" parameterClass="string">
+		select
+		* from t_auth_menu where menuTitle=#menuTitle#
+	</select>
+
+	<select id="getMenuModelObject" resultClass="menu"
+		parameterClass="long">
+		select
+		* from t_auth_menu where menuid=#menuid#
+	</select>
+
+	<insert id="menuModelSave" parameterClass="menu">
+		insert into
+		t_auth_menu( menuTitle, menuType,
+		menuDescription,
+		menuLink,
+		menuOperateType, menuPsersonScope,
+		menuAreaScope,
+		menuParentId)
+		VALUES (
+		#menuTitle#, #menuType#,
+		#menuDescription#, #menuLink#,
+		#menuOperateType#, #menuPsersonScope#,
+		#menuAreaScope#,
+		#menuParentId#)
+	</insert>
+
+	<update id="menuModelUpdate" parameterClass="menu">
+		update t_auth_menu
+		set menuTitle=#menuTitle#, menuType=#menuType#,
+		menuDescription=#menuDescription#, menuLink=#menuLink#,
+		menuOperateType=#menuOperateType#,
+		menuPsersonScope=#menuPsersonScope#, menuAreaScope=#menuAreaScope#,
+		menuParentId=#menuParentId# where menuId=#menuId#
+	</update>
+
+	<delete id="menuModelDelete" parameterClass="long">
+		delete FROM t_auth_menu
+		where menuId=#menuId#
+	</delete>
+</sqlMap>

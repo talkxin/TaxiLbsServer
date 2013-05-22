@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+
+	<typeAlias alias="roleVsMenuModel"
+		type="com.taxi.admin.authenticate.model.RoleVsMenuModel" />
+
+
+	<select id="getRoleVsRoleId" parameterClass="long" resultClass="roleVsMenuModel">
+		select * from t_auth_role_vs_menu where roleID=#roleID#
+	</select>
+	<select id="getRoleVsRoleIdByMain" parameterClass="long"
+		resultClass="roleVsMenuModel">
+		select * from t_auth_role_vs_menu where roleId=#roleId#
+		and menuId in
+		(select menuId from t_auth_menu where menuParentId = 0)
+	</select>
+	<select id="getRoleVsRoleIdByChild" parameterClass="long"
+		resultClass="roleVsMenuModel">
+		select * from t_auth_role_vs_menu where roleId=#roleId#
+		and menuId in
+		(select menuId from t_auth_menu where menuParentId != 0)
+	</select>
+	<select id="getRoleVs" parameterClass="hsahmap" resultClass="roleVsMenuModel">
+		select * from t_auth_role_vs_menu where roleId=#roleId# and
+		menuId=#menuId#
+	</select>
+	<delete id="deleteRoleVsMenu" parameterClass="long">
+		delete FROM
+		t_auth_role_vs_menu where id=#id#
+	</delete>
+	<select id="getRoleVsByMenuId" resultClass="roleVsMenuModel"
+		parameterClass="long">
+		select * from t_auth_role_vs_menu where menuId=#menuId#
+	</select>
+
+	<update id="roleVsMenuModelUpdate" parameterClass="roleVsMenuModel">
+		update 
+		t_auth_role_vs_menu set roleId=#roleId#, menuId=#menuId#,
+		menuOperateType=#menuOperateType#, menuPersonScope=#menuPersonScope#,
+		menuAreaScope=#menuAreaScope# where id=#id#
+	</update>
+
+	<delete id="roleVsMenuModelDelete" parameterClass="long">
+		delete FROM
+		t_auth_role_vs_menu where id=#id#
+	</delete>
+
+	<insert id="roleVsMenuModeSave" parameterClass="roleVsMenuModel">
+		INSERT INTO
+		T_AUTH_ROLE_VS_MENU
+		( roleId, menuId, menuOperateType,
+		menuPersonScope,
+		menuAreaScope)
+		VALUES (#roleId#, #menuId#,
+		#menuOperateType#,
+		#menuPersonScope#,
+		#menuAreaScope#)
+	</insert>
+</sqlMap>

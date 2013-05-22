@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="clientAjax" extends="json-default">
+		<action name="regAndLogin" method="regAndLogin"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">userInfo</param>
+			</result>
+		</action>
+		<action name="loginInClient" method="loginInClient"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">userInfo</param>
+			</result>
+		</action>
+		<action name="isNewUserForClient" method="isNewUserForClient"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">isTrue</param>
+			</result>
+		</action>
+		<action name="regDriver" method="regDriver"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+			</result>
+		</action>
+		<action name="getDriverInfo" method="getDriverInfo"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">drivreInfo</param>
+			</result>
+		</action>
+		<action name="updateDriverInfo" method="updateDriverInfo"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">isTrue</param>
+			</result>
+		</action>
+		<action name="regService" method="regService"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">serviceObj</param>
+			</result>
+		</action>
+		<action name="getServiceListForUser" method="getServiceListForUser"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">serviceMap</param>
+			</result>
+		</action>
+		<action name="getRandomServiceList" method="getRandomServiceList"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">serviceList</param>
+			</result>
+		</action>
+		<action name="cancelService" method="cancelService"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">isTrue</param>
+			</result>
+		</action>
+		<action name="removeService" method="removeService"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">isTrue</param>
+			</result>
+		</action>
+		<action name="chexInService" method="chexInService"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">updateCount</param>
+			</result>
+		</action>
+		<action name="overService" method="overService"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+			</result>
+		</action>
+		<action name="getAppointmentService" method="getAppointmentService"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+				<param name="root">serviceList</param>
+			</result>
+		</action>
+		<action name="updateDriverCoordinate" method="updateDriverCoordinate"
+			class="com.taxi.admin.client.action.ClientAction">
+			<result type="json">
+			</result>
+		</action>
+	</package>
+</struts>

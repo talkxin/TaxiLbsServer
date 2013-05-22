@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<display-name>taxiLbs</display-name>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext-*.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<servlet>
+	   <servlet-name>Admin</servlet-name>
+	   <servlet-class>
+	    org.logicalcobwebs.proxool.admin.servlet.AdminServlet
+	   </servlet-class>
+  </servlet>
+	<servlet-mapping>
+	   <servlet-name>Admin</servlet-name>
+	   <url-pattern>/admin</url-pattern>
+	</servlet-mapping>
+	<!-- 定义Struts2的FilterDispatcher的Filter -->
+	<filter>
+	<!-- 定义核心Filter的名字 -->
+	<filter-name>struts2</filter-name>
+	<!-- 定义核心Filter的实现类 -->
+	<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+	</filter>
+	
+	
+	<!-- FilterDispatcher用来初始化Struts2并且处理所有的Web请求 -->
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.do</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>		
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.action</url-pattern>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>FORWARD</dispatcher>		
+	</filter-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

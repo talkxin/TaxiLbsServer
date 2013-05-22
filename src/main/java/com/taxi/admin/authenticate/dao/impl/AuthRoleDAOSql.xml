@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+	<typeAlias alias="roleModel"
+		type="com.taxi.admin.authenticate.model.RoleModel" />
+
+	<select id="listRole" resultClass="roleModel">
+		select * from t_auth_role
+		order by roleId desc
+	</select>
+
+	<insert id="authRoleSave" parameterClass="roleModel">
+		INSERT INTO
+		T_AUTH_ROLE( roleTitle, roleDescription)
+		values(#roleTitle#,#roleDescription#)
+	</insert>
+
+	<update id="authRoleUpdate">
+		update t_auth_role set roleId=#roleId#,
+		roleTitle=#roleTitle#,
+		roleDescription=#roleDescription# where roleId=#roleId#
+	</update>
+
+	<delete id="authRoleDelete" parameterClass="long">
+		delete FROM t_auth_role
+		where roleId=#roleId#
+	</delete>
+
+	<select id="getAuthRoleObject" parameterClass="long"
+		resultClass="roleModel">
+		select * from t_auth_role where roleId=#roleId#
+	</select>
+</sqlMap>

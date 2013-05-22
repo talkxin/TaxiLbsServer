@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+
+	<typeAlias alias="userModel"
+		type="com.taxi.admin.authenticate.model.UserModel" />
+
+	<select id="listUser" resultClass="userModel">
+		select
+		t_auth_user.*,t_auth_role.roleTitle as roleTitle from
+		t_auth_user left
+		join t_auth_role on
+		t_auth_user.roleId=t_auth_role.roleId
+		order by
+		t_auth_user.userId desc
+	</select>
+
+	<select id="validatorLoginName" resultClass="userModel"
+		parameterClass="userModel">
+		select * from t_auth_user where loginName=#loginName#
+	</select>
+
+	<select id="validatorLoginNaByNameAndId" resultClass="userModel"
+		parameterClass="userModel">
+		select * from t_auth_user where loginName=#loginName#
+		and userId!=#userId#
+	</select>
+
+	<select id="listUser1" resultClass="userModel" parameterClass="string">
+		select * from t_auth_user where loginName = #loginName#
+	</select>
+
+	<select id="checkUser" resultClass="userModel" parameterClass="hsahmap">
+		select * from t_auth_user where loginName= #loginName# and password=
+		#password#
+	</select>
+
+	<select id="listUserByRoleId" resultClass="userModel"
+		parameterClass="long">
+		select * from t_auth_user where roleId=#roleId#
+	</select>
+
+	<insert id="userModelSave" parameterClass="userModel">
+		INSERT INTO
+		T_AUTH_USER
+		(userName, loginName, password, email, roleId)
+		VALUES (
+		#userName#, #loginName#, #password#, #email#, #roleId#)
+	</insert>
+
+	<update id="userModelUpdate" parameterClass="userModel">
+		update T_AUTH_USER
+		set userName=#userName#, loginName=#loginName#, password=#password#,
+		email=#email#, roleId=#roleId# where userId=#userId#
+	</update>
+
+	<delete id="userModelDelete" parameterClass="long">
+		delete FROM T_AUTH_USER
+		where userId=#userId#
+	</delete>
+
+	<select id="getUserModel" parameterClass="long" resultClass="userModel">
+		select * from T_AUTH_USER where userId=#userId#
+	</select>
+</sqlMap>

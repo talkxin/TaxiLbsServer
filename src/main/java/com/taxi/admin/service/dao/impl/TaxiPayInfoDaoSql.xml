@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+	<typeAlias alias="taxipayInfo"
+		type="com.taxi.admin.service.module.TTaxiserverTaxipayinfo" />
+
+	<select id="getTaxiPayList" parameterClass="taxipayInfo"
+		resultClass="taxipayInfo">
+		select * from t_taxiserver_taxipayinfo left join (select
+		t_taxiserver_taxiservice.serviceID as
+		serviceID,t_taxiserver_driverinfo.phoneNumber as
+		phoneNumber,t_taxiserver_driverinfo.plateNumber as
+		plateNumber,t_taxiserver_driverinfo.driverCompany as driverCompany
+		from t_taxiserver_taxiservice left join t_taxiserver_driverinfo on
+		t_taxiserver_taxiservice.did=t_taxiserver_driverinfo.id
+		) t on
+		t.serviceID=t_taxiserver_taxipayinfo.serviceID where 1=1
+		<isNotNull prepend="and" property="phoneNumber">
+			phoneNumber=#phoneNumber#
+		</isNotNull>
+		<isNotNull prepend="and" property="driverCompany">
+			driverCompany like
+			'%'||#driverCompany#||'%'
+		</isNotNull>
+		<isNotNull prepend="and" property="plateNumber">
+			plateNumber=#plateNumber#
+		</isNotNull>
+	</select>
+
+	<select id="CountTaxiPayList" parameterClass="taxipayInfo"
+		resultClass="long">
+		select count(*) from t_taxiserver_taxipayinfo left join (select
+		t_taxiserver_taxiservice.serviceID as
+		serviceID,t_taxiserver_driverinfo.phoneNumber as
+		phoneNumber,t_taxiserver_driverinfo.plateNumber as
+		plateNumber,t_taxiserver_driverinfo.driverCompany as driverCompany
+		from t_taxiserver_taxiservice left join t_taxiserver_driverinfo on
+		t_taxiserver_taxiservice.did=t_taxiserver_driverinfo.id
+		) t on
+		t.serviceID=t_taxiserver_taxipayinfo.serviceID where 1=1
+		<isNotNull prepend="and" property="phoneNumber">
+			phoneNumber=#phoneNumber#
+		</isNotNull>
+		<isNotNull prepend="and" property="driverCompany">
+			driverCompany like
+			'%'||#driverCompany#||'%'
+		</isNotNull>
+		<isNotNull prepend="and" property="plateNumber">
+			plateNumber=#plateNumber#
+		</isNotNull>
+	</select>
+</sqlMap>

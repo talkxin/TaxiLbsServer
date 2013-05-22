@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+	<typeAlias alias="taxiUser"
+		type="com.taxi.admin.service.module.TTaxiserverTaxiuser" />
+	<select id="getAllUserPhone" resultClass="long">
+		select phoneNumber from t_taxiserver_taxiuser
+	</select>
+	<select id="getAllLoginName" resultClass="string">
+	select loginName from t_taxiserver_taxiuser
+	</select>
+
+	<select id="getUserList" parameterClass="taxiUser" resultClass="taxiUser">
+		select * from t_taxiserver_taxiuser where 1=1
+		<isNotNull prepend="and" property="loginName">
+			loginName like
+			'%$loginName$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="phoneNumber">
+			phoneNumber like
+			'%$phoneNumber$%'
+		</isNotNull>
+	</select>
+	<select id="countUserList" parameterClass="taxiUser"
+		resultClass="long">
+		select count(*) from t_taxiserver_taxiuser where 1=1
+		<isNotNull prepend="and" property="loginName">
+			loginName like
+			'%$loginName$%'
+		</isNotNull>
+		<isNotNull prepend="and" property="phoneNumber">
+			phoneNumber like
+			'%$phoneNumber$%'
+		</isNotNull>
+	</select>
+
+	<select id="getUserObject" parameterClass="long" resultClass="taxiUser">
+		select * from t_taxiserver_taxiuser where uid=#uid#
+	</select>
+	<select id="isNewUser" parameterClass="taxiUser" resultClass="taxiUser">
+		select * from t_taxiserver_taxiuser where loginName=#loginName# or
+		phoneNumber=#phoneNumber#
+		<!-- dynamic prepend="where"> <isNotNull property="loginName"> loginName=#loginName# 
+			</isNotNull> <isNotNull prepend="or" property="phoneNumber"> phoneNumber=#phoneNumber# 
+			</isNotNull> </dynamic -->
+	</select>
+
+	<insert id="isAddUser" parameterClass="taxiUser">
+	<![CDATA[insert into t_taxiserver_taxiuser(userName,phoneNumber,loginName,password,email,roleid,isLogin) values(#userName#,#phoneNumber#,#loginName#,#password#,#email#,#roleid#,#isLogin#)]]>
+		<selectKey resultClass="Long" keyProperty="uid">
+	<![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+		</selectKey>
+	</insert>
+
+	<update id="isUpdateUser" parameterClass="taxiUser">
+		update
+		t_taxiserver_taxiuser set
+		userName=#userName#,phoneNumber=#phoneNumber#,loginName=#loginName#
+		<isNotNull property="password">,password=#password#</isNotNull>
+		,email=#email#,roleid=#roleid#,isLogin=#isLogin#
+		where uid=#uid#
+	</update>
+
+	<delete id="isOutUser" parameterClass="long">
+		delete
+		t_taxiserver_taxiuser where uid=#uid#
+	</delete>
+
+</sqlMap>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="long" type="java.lang.Long" />
+	<typeAlias alias="hsahmap" type="java.util.HashMap" />
+	<typeAlias alias="string" type="java.lang.String" />
+	<typeAlias alias="taxiService"
+		type="com.taxi.admin.service.module.TTaxiserverTaxiservice" />
+	<!-- 添加订单 -->
+	<insert id="regService" parameterClass="taxiService">
+		<![CDATA[insert into
+		t_taxiserver_taxiservice(did,userName,userNambr,city,startAddLon,startAddLat,endAdd,startTime,appointmentTime,appointmentAdd,appointmentEnd,appointmentEndTime,serviceType,passengerBlue,orderAddTime,kmNumber,serviceEnd)
+		values(#did#,#userName#,#userNambr#,#city#,#startAddLon#,#startAddLat#,#endAdd#,#startTime#,#appointmentTime#,#appointmentAdd#,#appointmentEnd#,#appointmentEndTime#,#serviceType#,#passengerBlue#,#orderAddTime#,#kmNumber#,#serviceEnd#)]]>
+		<selectKey resultClass="long" keyProperty="serviceId">
+			<![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+		</selectKey>
+	</insert>
+	<!-- 取消所有随机订单 -->
+	<update id="deleteAllDidSuiji" parameterClass="taxiService">update
+		t_taxiserver_taxiservice set serviceEnd=3 where did=#did# and
+		serviceType=0
+	</update>
+	<!-- 用户手动取消一个订单 -->
+	<update id="deleteOneDidService" parameterClass="taxiService">update
+		t_taxiserver_taxiservice set serviceEnd=3 where serviceId=#serviceId#
+	</update>
+	<!-- 接单 -->
+	<update id="chexInService" parameterClass="taxiService">update
+		t_taxiserver_taxiservice set
+		uid=#uid#,driverBlue=#driverBlue#,serviceEnd=#serviceEnd# where
+		serviceID=#serviceId#
+	</update>
+	<!-- 完成订单 -->
+	<update id="overService" parameterClass="taxiService">
+		update
+		t_taxiserver_taxiservice set
+		startTime=#startTime#,endTime=#endTime#,endAdd=#endAdd#,serviceEnd=2
+		where serviceID=#serviceId#
+	</update>
+
+	<!-- 查询个人订单 -->
+	<select id="getServiceListForUser" parameterClass="taxiService"
+		resultClass="taxiService">
+		select * from t_taxiserver_taxiservice where 1=1
+		<isNotNull property="did"> and did=#did#</isNotNull>
+		<isNotNull property="uid"> and uid=#uid#</isNotNull>
+		<isNotNull property="serviceType"> and city=#city# and
+			serviceType=#serviceType# and
+			serviceEnd=0
+		</isNotNull>
+	</select>
+	<!-- 查询个人订单总页数 -->
+	<select id="getServiceListForUserCount" parameterClass="taxiService"
+		resultClass="long">
+		select count(*) from t_taxiserver_taxiservice where 1=1
+		<isNotNull property="did"> and did=#did#</isNotNull>
+		<isNotNull property="uid"> and uid=#uid#</isNotNull>
+		<isNotNull property="serviceType"> and serviceType=#serviceType# and
+			serviceEnd=0
+		</isNotNull>
+	</select>
+	<!-- 通过坐标返回订单 -->
+	<select id="getRandomServiceList" parameterClass="taxiService"
+		resultClass="taxiService">
+		<![CDATA[
+select * from (select * from t_taxiserver_taxiservice where serviceId in (select serviceId from (select  sub.*
+from (
+select  serviceId,startAddLon, startAddLat 
+from t_taxiserver_taxiservice 
+where startAddLon 
+between #startAddLon#-startAddLon 
+and #startAddLon#+startAddLon 
+and startAddLat between #startAddLat#-startAddLat 
+and #startAddLat#+startAddLat) as sub 
+where pow(#startAddLon#-sub.startAddLon,2) + pow(#startAddLat#-sub.startAddLat,2) < pow(1000,2))as sub) and uid is null ) as allTable where serviceEnd is null or serviceEnd=0]]>
+	</select>
+	<!-- 通过城市搜索订单 -->
+	<select id="getRandomServiceListForCity" parameterClass="taxiService"
+		resultClass="taxiService">
+		select * from t_taxiserver_taxiservice where city like
+		'%$city$%' and uid=null
+	</select>
+	<!-- 返回某城市的预约列表 -->
+	<select id="getAppointmentServiceList" parameterClass="taxiService"
+		resultClass="taxiService">select * from t_taxiserver_taxiservice where city like
+		'%$city$%' and uid=null and serviceType=1</select>
+</sqlMap>

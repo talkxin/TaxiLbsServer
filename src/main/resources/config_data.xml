@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <domainName>
+       <domainUrl>http://127.0.0.1:8080/TaxiLbs</domainUrl> 
+          <!--<domainUrl>http://127.0.0.1:8080/TaxiLbs</domainUrl>-->
+          <domainMainPage>http://127.0.0.1:8080/TaxiLbs/main.do</domainMainPage>
+       <!--<domainMainPage>http://127.0.0.1:8080/TaxiLbs/main.do</domainMainPage> -->
+    </domainName>
+    <releasePath>
+    		http://127.0.0.1:8080/TaxiLbs/home.do?mid=
+    </releasePath>
+    
+    <msm>
+    	<creator>hnyd</creator>
+    	<from>10658686</from>
+    	<charge></charge>
+    	<fee>0</fee>
+    	<feeType>1</feeType>
+		<serviceId>FREE</serviceId>
+		<format>15</format>
+		<linkId></linkId>
+		<operatorCode>HNYD</operatorCode>
+		<needMtReport>true</needMtReport>
+		<content>您已更换手机 换机服务为您提供必备的软件下载详情点击#url#</content>
+		<intervalDays>15</intervalDays>
+    </msm>
+    
+</config>
